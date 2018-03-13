@@ -1,5 +1,8 @@
 package com.example.evilj.bakingapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by JjaviMS on 13/03/2018.
  *
@@ -8,7 +11,7 @@ package com.example.evilj.bakingapp.models;
  * This is a class to help saving the ingredients
  */
 
-public class Ingredients {
+public class Ingredients implements Parcelable {
 
     private double quantity;
     private String measure;
@@ -45,4 +48,34 @@ public class Ingredients {
         return ingredient != null ? ingredient.equals(that.ingredient) : that.ingredient == null;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeDouble(quantity);
+        parcel.writeString(measure);
+        parcel.writeString(ingredient);
+    }
+
+    public static final Parcelable.Creator<Ingredients> CREATOR =
+            new Creator<Ingredients>() {
+                @Override
+                public Ingredients createFromParcel(Parcel parcel) {
+                    return new Ingredients(parcel);
+                }
+
+                @Override
+                public Ingredients[] newArray(int i) {
+                    return new Ingredients[i];
+                }
+            };
+
+    public Ingredients (Parcel parcel){
+        this.quantity = parcel.readDouble();
+        this.measure = parcel.readString();
+        this.ingredient = parcel.readString();
+    }
 }

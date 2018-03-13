@@ -1,5 +1,8 @@
 package com.example.evilj.bakingapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by JjaviMS on 13/03/2018.
  *
@@ -9,7 +12,7 @@ package com.example.evilj.bakingapp.models;
  *         </p>
  */
 
-public class Steps {
+public class Steps implements Parcelable {
 
     private String shorDesc;
     private String desc;
@@ -21,6 +24,13 @@ public class Steps {
         this.desc = desc;
         this.videoUrl = videoUrl;
         this.thumbnailUrl = thumbnailUrl;
+    }
+
+    public Steps(Parcel parcelable) {
+        this.shorDesc = parcelable.readString();
+        this.desc = parcelable.readString();
+        this.videoUrl = parcelable.readString();
+        this.thumbnailUrl = parcelable.readString();
     }
 
     public String getShorDesc() {
@@ -57,4 +67,29 @@ public class Steps {
         return thumbnailUrl != null ? thumbnailUrl.equals(steps.thumbnailUrl) : steps.thumbnailUrl == null;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(shorDesc);
+        parcel.writeString(desc);
+        parcel.writeString(videoUrl);
+        parcel.writeString(thumbnailUrl);
+    }
+
+    public static final Parcelable.Creator<Steps> CREATOR =
+            new Creator<Steps>() {
+                @Override
+                public Steps createFromParcel(Parcel parcel) {
+                    return new Steps(parcel);
+                }
+
+                @Override
+                public Steps[] newArray(int i) {
+                    return new Steps[i];
+                }
+            };
 }
