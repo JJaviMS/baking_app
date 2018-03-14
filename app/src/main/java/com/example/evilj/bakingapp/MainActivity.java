@@ -1,6 +1,7 @@
 package com.example.evilj.bakingapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -28,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private LinearLayoutManager mLinearLayoutManager;
 
     private final int LOADER_ID = 0;
-
+    private final String KEY_RECYCLE_VIEW_STATE = "Recycler view state";
+    public final static String BAKERY_INFORMATION_KEY = "Bakery info";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mBakeryRecyclerView.setAdapter(mBakeryAdapter);
         mBakeryRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mBakeryRecyclerView.addItemDecoration(new DividerItemDecoration(this,mLinearLayoutManager.getOrientation()));
 
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
     }
@@ -63,7 +67,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onClick(String unparsedJSON) {
-        //TODO Make intent
+        Intent intent = new Intent(this,BakeryMain.class);
+        intent.putExtra(BAKERY_INFORMATION_KEY,unparsedJSON);
+        startActivity(intent);
     }
 
     public static class MyLoader extends AsyncTaskLoader<JSONArray> {
@@ -87,5 +93,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             super.onStartLoading();
             forceLoad();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(KEY_RECYCLE_VIEW_STATE,mLinearLayoutManager.onSaveInstanceState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mLinearLayoutManager.onRestoreInstanceState(savedInstanceState.getParcelable(KEY_RECYCLE_VIEW_STATE));
     }
 }

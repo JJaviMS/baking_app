@@ -12,7 +12,15 @@
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/black</item>
+    </style>
 
+    <style name="ingredient_title" parent="title_style">
+        <item name="textSize">40sp</item>
+    </style>
+
+    <style name="description_text_view">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
     </style>
 
 </resources>
