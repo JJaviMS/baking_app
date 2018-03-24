@@ -64,7 +64,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         TextView mMeasureTv;
         @BindView(R.id.quantity_desc_text_view)
         TextView mQuantityTv;
-        public IngredientViewHolder(View itemView) {
+        IngredientViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
