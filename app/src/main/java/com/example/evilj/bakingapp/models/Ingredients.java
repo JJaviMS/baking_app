@@ -2,6 +2,7 @@ package com.example.evilj.bakingapp.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Arrays;
 
@@ -80,7 +81,8 @@ public class Ingredients implements Parcelable {
         this.measure = parcel.readString();
         this.ingredient = parcel.readString();
     }
-    public static Ingredients[] parseParcelable (Parcelable[] parcelables){
+    @NonNull
+    public static Ingredients[] parseParcelable (@NonNull Parcelable[] parcelables){
         return Arrays.copyOf(parcelables,parcelables.length,Ingredients[].class);
     }
 }

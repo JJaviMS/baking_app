@@ -3,4 +3,6 @@
     <string name="quantity">Quantity:</string>
     <string name="measure">Measure:</string>
     <string name="ingredients">Ingredients</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 </resources>
