@@ -1,6 +1,5 @@
 package com.example.evilj.bakingapp.utils;
 
-import android.content.ContentValues;
 import android.support.annotation.Nullable;
 
 import com.example.evilj.bakingapp.models.Ingredients;
@@ -9,8 +8,6 @@ import com.example.evilj.bakingapp.models.Steps;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 /**
  * Created by JjaviMS on 12/03/2018.
@@ -64,15 +61,16 @@ public class JSONUtils {
     }
 
     /**
-     * Given a JSON object with a bakery information it parse the ingredients into an Array which
+     * Given a JSON object with a bakery information it parses the ingredients into an Array which
      * contains the different ingredients wrapped into a {@see com.example.evilj.bakingapp.models.Ingredients}
      * @param object The JSON object of the bakery to get the objects
      * @return An Array of the ingredients parsed into Ingredients objects
      */
     @Nullable
-    public static Ingredients[] parseIngredients (JSONObject object){
+    public static Ingredients[] parseIngredients (String object){
         try {
-            JSONArray ingredients = object.getJSONArray(INGREDIENTS);
+            JSONObject json = new JSONObject(object);
+            JSONArray ingredients = json.getJSONArray(INGREDIENTS);
             int size = ingredients.length();
             Ingredients[] parsed = new Ingredients[size];
             for (int i=0;i<size;i++){
@@ -85,11 +83,17 @@ public class JSONUtils {
             return null;
         }
     }
-
+    /**
+     * Given a JSON object with a bakery information it parses the ingredients into an Array which
+     * contains the different ingredients wrapped into a {@see com.example.evilj.bakingapp.models.Steps}
+     * @param object The JSON object of the bakery to get the objects
+     * @return An Array of the steps parsed into Steps objects
+     */
     @Nullable
-    public static Steps[] parseSteps (JSONObject object){
+    public static Steps[] parseSteps (String object){
         try{
-            JSONArray steps = object.getJSONArray(STEPS);
+            JSONObject json = new JSONObject(object);
+            JSONArray steps = json.getJSONArray(STEPS);
             int size = steps.length();
             Steps[] parsed = new Steps[size];
             for (int i=0;i<size;i++){
