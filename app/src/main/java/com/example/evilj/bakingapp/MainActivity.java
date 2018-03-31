@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.example.evilj.bakingapp.utils.JSONUtils;
 import com.example.evilj.bakingapp.utils.NetworkUtils;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONArray>,BakeryAdapter.BakeryCallbacks {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONArray>, BakeryAdapter.BakeryCallbacks {
     @BindView(R.id.recycler_view_bakery)
     RecyclerView mBakeryRecyclerView;
     private BakeryAdapter mBakeryAdapter;
@@ -39,14 +40,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mLinearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        mBakeryAdapter = new BakeryAdapter(this,this);
+        mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mBakeryAdapter = new BakeryAdapter(this, this);
 
         mBakeryRecyclerView.setAdapter(mBakeryAdapter);
         mBakeryRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mBakeryRecyclerView.addItemDecoration(new DividerItemDecoration(this,mLinearLayoutManager.getOrientation()));
+        mBakeryRecyclerView.addItemDecoration(new DividerItemDecoration(this, mLinearLayoutManager.getOrientation()));
 
-        getSupportLoaderManager().initLoader(LOADER_ID,null,this);
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @NonNull
@@ -57,7 +58,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<JSONArray> loader, JSONArray data) {
-        mBakeryAdapter.setBakery(data);
+        if (data != null)
+            mBakeryAdapter.setBakery(data);
+        else Toast.makeText(this, "Can´t load the data", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -67,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onClick(String unparsedJSON) {
-        Intent intent = new Intent(this,BakeryMain.class);
-        intent.putExtra(BAKERY_INFORMATION_KEY,unparsedJSON);
+        Intent intent = new Intent(this, BakeryMain.class);
+        intent.putExtra(BAKERY_INFORMATION_KEY, unparsedJSON);
         startActivity(intent);
     }
 
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(KEY_RECYCLE_VIEW_STATE,mLinearLayoutManager.onSaveInstanceState());
+        outState.putParcelable(KEY_RECYCLE_VIEW_STATE, mLinearLayoutManager.onSaveInstanceState());
     }
 
     @Override

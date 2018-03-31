@@ -82,7 +82,7 @@ public class StepFragment extends Fragment implements Player.EventListener {
         ButterKnife.bind(this,view);
 
         initializeMediaSession();
-        if (savedInstanceState!=null)mSteps = (Steps) savedInstanceState.getParcelable(SAVE_STEP);
+        if (savedInstanceState!=null)mSteps = savedInstanceState.getParcelable(SAVE_STEP);
         if (mSteps==null)throw new RuntimeException("Steps can´t be null");
         mAspectRatioFrameLayout.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
         mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
