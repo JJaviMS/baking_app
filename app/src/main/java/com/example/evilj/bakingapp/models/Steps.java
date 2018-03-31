@@ -3,6 +3,8 @@ package com.example.evilj.bakingapp.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Arrays;
+
 /**
  * Created by JjaviMS on 13/03/2018.
  *
@@ -93,4 +95,7 @@ public class Steps implements Parcelable {
                 }
             };
 
+    public static Steps[] parseParcelable (Parcelable[] parcelables){
+        return Arrays.copyOf(parcelables,parcelables.length,Steps[].class);
+    }
 }

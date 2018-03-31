@@ -3,6 +3,7 @@ package com.example.evilj.bakingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setAdapter(mStepsAdapter);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,mLinearLayoutManager.getOrientation()));
     }
 
 
