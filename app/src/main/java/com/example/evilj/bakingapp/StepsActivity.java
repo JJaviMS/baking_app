@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
@@ -41,7 +40,7 @@ public class StepsActivity extends AppCompatActivity implements StepFragment.Ste
         mStepFragment = new StepFragment();
         mStepFragment.setSteps(mSteps[currentPos]);
 
-        mFragmentManager.beginTransaction().add(R.id.frame_layout_step,mStepFragment).commit();
+        mFragmentManager.beginTransaction().replace(R.id.frame_layout_step,mStepFragment).commit();
     }
 
     @OnClick(R.id.next_button)
@@ -61,12 +60,10 @@ public class StepsActivity extends AppCompatActivity implements StepFragment.Ste
     }
 
     private void changeFragment(){
-        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-        fragmentTransaction.remove(mStepFragment);
-        StepFragment stepFragment = new StepFragment();
-        stepFragment.setSteps(mSteps[currentPos]);
-        fragmentTransaction.add(R.id.frame_layout_step,stepFragment).commit();
-        mStepFragment=stepFragment;
+        mStepFragment = new StepFragment();
+        mStepFragment.setSteps(mSteps[currentPos]);
+        mFragmentManager.beginTransaction().replace(R.id.frame_layout_step,mStepFragment).commit();
+
     }
 
     @Override

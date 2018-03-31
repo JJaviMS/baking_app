@@ -4,6 +4,7 @@ package com.example.evilj.bakingapp;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -58,6 +59,8 @@ public class StepFragment extends Fragment implements Player.EventListener {
     private PlaybackStateCompat.Builder mPlaybackBuilder;
     private StepListener mStepListener;
 
+    private final String SAVE_STEP = "state";
+
 
 
     public StepFragment() {
@@ -79,7 +82,7 @@ public class StepFragment extends Fragment implements Player.EventListener {
         ButterKnife.bind(this,view);
 
         initializeMediaSession();
-
+        if (savedInstanceState!=null)mSteps = (Steps) savedInstanceState.getParcelable(SAVE_STEP);
         if (mSteps==null)throw new RuntimeException("Steps can´t be null");
         mAspectRatioFrameLayout.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
         mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
@@ -228,5 +231,11 @@ public class StepFragment extends Fragment implements Player.EventListener {
         }catch (ClassCastException e){
             throw new ClassCastException(context.toString() + "must implement StepListener");
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(SAVE_STEP,mSteps);
     }
 }

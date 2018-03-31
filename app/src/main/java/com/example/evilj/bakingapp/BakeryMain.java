@@ -77,6 +77,7 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
             mFragmentManager.beginTransaction().add(R.id.master_flow_frame_layout, mStepFragment).commit();
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
+
     }
 
 
