@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:id="@+id/master_flow_linear">
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include android:id="@+id/ingredients_layout"
+            layout="@layout/bakery_item"/>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:id="@+id/bakery_main_recycler_view"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/master_flow_frame_layout">
+
+    </FrameLayout>
+
+
+</LinearLayout>
