@@ -21,7 +21,6 @@ import com.example.evilj.bakingapp.utils.JSONUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsCallback, StepFragment.StepListener {
 
@@ -81,12 +80,20 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
     }
 
 
-    @Optional
+
     @OnClick(R.id.ingredients_layout)
     void seeIngredients() {
-        Intent intent = new Intent(this, IngredientsActivity.class);
-        intent.putExtra(KEY_INGREDIENTS, mIngredients);
-        startActivity(intent);
+        if (!mTwoPane) {
+            Intent intent = new Intent(this, IngredientsActivity.class);
+            intent.putExtra(KEY_INGREDIENTS, mIngredients);
+            startActivity(intent);
+        }else{
+            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            ingredientsFragment.setIngredients(mIngredients);
+            mFragmentManager.beginTransaction().replace(R.id.master_flow_frame_layout,ingredientsFragment).commit();
+            mStepFragment = null;
+            currentPos=-1;
+        }
     }
 
     @Override
