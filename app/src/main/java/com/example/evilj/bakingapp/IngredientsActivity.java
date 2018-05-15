@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.evilj.bakingapp.models.Ingredients;
 
+import java.util.ArrayList;
+
 public class IngredientsActivity extends AppCompatActivity {
 
 
@@ -18,17 +20,27 @@ public class IngredientsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingredients_activity);
-
-
         Intent intentWhichStarted = getIntent();
         if (intentWhichStarted == null)
             throw new RuntimeException("Intent can´t be null");
         mIngredientsFragment = new IngredientsFragment();
-        mIngredientsFragment.setIngredients(Ingredients.parseParcelable(intentWhichStarted.getParcelableArrayExtra(BakeryMain.KEY_INGREDIENTS)));
+        Ingredients[] ingredients = Ingredients.parseParcelable(intentWhichStarted.getParcelableArrayExtra(BakeryMain.KEY_INGREDIENTS));
+        sendNewIngredientsToWidget(ingredients);
+        mIngredientsFragment.setIngredients(ingredients);
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.beginTransaction().replace(R.id.ingredient_fragment,mIngredientsFragment).commit();
 
 
+    }
+
+    private void sendNewIngredientsToWidget (Ingredients[] ingredients){
+        ArrayList<String> strings = new ArrayList<>();
+        for(Ingredients ingredient:ingredients){
+            strings.add(ingredient.getIngredient());
+        }
+        Intent intent = new Intent(BakingService.UPDATE_INGREDIENTS);
+        intent.putExtra(BakingService.INGREDIENTS_EXTRA,strings);
+        startService(intent);
     }
 
 
