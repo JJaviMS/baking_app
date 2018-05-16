@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class BakingService extends IntentService {
 
-    public static final String UPDATE_INGREDIENTS = "com.example.evilj.bakingapp";
+    public static final String UPDATE_INGREDIENTS = "com.example.evilj.bakingapp.UPDATE_INGREDIENTS";
     public static final String INGREDIENTS_EXTRA = "ingredients";
 
     public BakingService() {
@@ -25,6 +25,7 @@ public class BakingService extends IntentService {
 
     public static void startBakingService (Context context, ArrayList<String> ingredients){
         Intent intent = new Intent(context,BakingService.class);
+        intent.setAction(UPDATE_INGREDIENTS);
         intent.putExtra(INGREDIENTS_EXTRA,ingredients);
         context.startService(intent);
     }
@@ -35,7 +36,8 @@ public class BakingService extends IntentService {
         final String action = intent.getAction();
         if (action==null) return;
         if (action.equals(UPDATE_INGREDIENTS)){
-            handleUpdate(intent.getStringArrayListExtra(UPDATE_INGREDIENTS));
+            ArrayList<String> strings = intent.getStringArrayListExtra(INGREDIENTS_EXTRA);
+            handleUpdate(strings);
         }
     }
 

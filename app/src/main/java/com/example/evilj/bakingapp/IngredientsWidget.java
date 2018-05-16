@@ -3,6 +3,7 @@ package com.example.evilj.bakingapp;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
 
 import java.util.ArrayList;
@@ -12,14 +13,13 @@ import java.util.ArrayList;
  */
 public class IngredientsWidget extends AppWidgetProvider {
 
-    private static ArrayList<String> ingredientes;
+    public static ArrayList<String> ingredientes;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
+        RemoteViews views = getRemoteViews(context);
 
 
         // Instruct the widget manager to update the widget
@@ -51,6 +51,15 @@ public class IngredientsWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    private static RemoteViews getRemoteViews (Context context){
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(),R.layout.ingredients_widget);
+        Intent intent = new Intent(context,ListWidgetService.class);
+        intent.putExtra(BakingService.INGREDIENTS_EXTRA,ingredientes);
+        remoteViews.setRemoteAdapter(R.id.list_widget,intent);
+        remoteViews.setEmptyView(R.id.list_widget,R.id.empty_widget);
+        return remoteViews;
     }
 
 }

@@ -38,9 +38,7 @@ public class IngredientsActivity extends AppCompatActivity {
         for(Ingredients ingredient:ingredients){
             strings.add(ingredient.getIngredient());
         }
-        Intent intent = new Intent(BakingService.UPDATE_INGREDIENTS);
-        intent.putExtra(BakingService.INGREDIENTS_EXTRA,strings);
-        startService(intent);
+        BakingService.startBakingService(this,strings);
     }
 
 
