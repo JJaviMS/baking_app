@@ -21,13 +21,13 @@ public class ListWidgetService extends RemoteViewsService {
 
 class ListRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory{
 
-    public ListRemoteViewFactory(Context context,ArrayList<String> strings) {
+    ListRemoteViewFactory(Context context, ArrayList<String> strings) {
         mContext = context;
         mStrings = strings;
     }
 
-    Context mContext;
-    ArrayList<String> mStrings;
+    private Context mContext;
+    private ArrayList<String> mStrings;
 
     @Override
     public void onCreate() {
@@ -54,7 +54,7 @@ class ListRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory{
     public RemoteViews getViewAt(int i) {
         if (mStrings ==null || mStrings.size()==0) return null;
         String string = mStrings.get(i);
-        RemoteViews view = new RemoteViews(mContext.getPackageName(),R.layout.ingredients_widget);
+        RemoteViews view = new RemoteViews(mContext.getPackageName(),R.layout.ingredient_widget_container);
         view.setTextViewText(R.id.widget_text_view,string);
         return view;
     }

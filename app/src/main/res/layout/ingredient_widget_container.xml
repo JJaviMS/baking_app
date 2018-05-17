@@ -8,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/widget_text_view"
-        android:textColor="@android:color/black"
-        android:text="AAAA"/>
+        android:textColor="@android:color/black" />
 
 </FrameLayout>
