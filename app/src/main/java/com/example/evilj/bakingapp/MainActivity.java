@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -14,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.example.evilj.bakingapp.idlingResource.SimpleIdlingResource;
 import com.example.evilj.bakingapp.utils.JSONUtils;
 import com.example.evilj.bakingapp.utils.NetworkUtils;
 
@@ -24,7 +26,7 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONArray>, BakeryAdapter.BakeryCallbacks {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONArray>, BakeryAdapter.BakeryCallbacks{
     @BindView(R.id.recycler_view_bakery)
     RecyclerView mBakeryRecyclerView;
     private BakeryAdapter mBakeryAdapter;
@@ -33,6 +35,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private final int LOADER_ID = 0;
     private final String KEY_RECYCLE_VIEW_STATE = "Recycler view state";
     public final static String BAKERY_INFORMATION_KEY = "Bakery info";
+
+    //Test variables
+    @VisibleForTesting
+    @Nullable
+    SimpleIdlingResource mSimpleIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,5 +115,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mLinearLayoutManager.onRestoreInstanceState(savedInstanceState.getParcelable(KEY_RECYCLE_VIEW_STATE));
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public SimpleIdlingResource getSimpleIdlingResource(){
+        if (mSimpleIdlingResource==null)
+            mSimpleIdlingResource= new SimpleIdlingResource();
+        return mSimpleIdlingResource;
     }
 }
