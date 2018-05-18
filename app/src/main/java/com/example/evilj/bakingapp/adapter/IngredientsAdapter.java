@@ -1,4 +1,4 @@
-package com.example.evilj.bakingapp;
+package com.example.evilj.bakingapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.evilj.bakingapp.R;
 import com.example.evilj.bakingapp.models.Ingredients;
 
 import java.util.Locale;

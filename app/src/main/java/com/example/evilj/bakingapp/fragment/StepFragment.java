@@ -1,4 +1,4 @@
-package com.example.evilj.bakingapp;
+package com.example.evilj.bakingapp.fragment;
 
 
 import android.content.Context;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.evilj.bakingapp.R;
 import com.example.evilj.bakingapp.models.Steps;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;

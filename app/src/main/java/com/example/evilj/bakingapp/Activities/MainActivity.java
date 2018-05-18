@@ -1,4 +1,4 @@
-package com.example.evilj.bakingapp;
+package com.example.evilj.bakingapp.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.example.evilj.bakingapp.R;
+import com.example.evilj.bakingapp.adapter.BakeryAdapter;
 import com.example.evilj.bakingapp.idlingResource.SimpleIdlingResource;
 import com.example.evilj.bakingapp.utils.JSONUtils;
 import com.example.evilj.bakingapp.utils.NetworkUtils;
@@ -26,7 +28,7 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONArray>, BakeryAdapter.BakeryCallbacks{
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONArray>, BakeryAdapter.BakeryCallbacks {
     @BindView(R.id.recycler_view_bakery)
     RecyclerView mBakeryRecyclerView;
     private BakeryAdapter mBakeryAdapter;

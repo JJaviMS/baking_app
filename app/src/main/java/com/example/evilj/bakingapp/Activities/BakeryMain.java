@@ -1,4 +1,4 @@
-package com.example.evilj.bakingapp;
+package com.example.evilj.bakingapp.Activities;
 
 
 import android.content.Intent;
@@ -14,6 +14,10 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.evilj.bakingapp.R;
+import com.example.evilj.bakingapp.adapter.StepsAdapter;
+import com.example.evilj.bakingapp.fragment.IngredientsFragment;
+import com.example.evilj.bakingapp.fragment.StepFragment;
 import com.example.evilj.bakingapp.models.Ingredients;
 import com.example.evilj.bakingapp.models.Steps;
 import com.example.evilj.bakingapp.utils.JSONUtils;

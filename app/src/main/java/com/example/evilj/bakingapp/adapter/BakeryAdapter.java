@@ -1,4 +1,4 @@
-package com.example.evilj.bakingapp;
+package com.example.evilj.bakingapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.evilj.bakingapp.R;
 import com.example.evilj.bakingapp.utils.JSONUtils;
 
 import org.json.JSONArray;
@@ -28,7 +29,7 @@ public class BakeryAdapter extends RecyclerView.Adapter<BakeryAdapter.BakeryView
     private JSONArray bakery;
     private Context mContext;
     private BakeryCallbacks mBakeryCallbacks;
-    interface BakeryCallbacks{
+    public interface BakeryCallbacks{
         void onClick(String unparsedJSON);
     }
 

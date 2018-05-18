@@ -1,4 +1,4 @@
-package com.example.evilj.bakingapp;
+package com.example.evilj.bakingapp.widget;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+
+import com.example.evilj.bakingapp.R;
 
 import java.util.ArrayList;
 
@@ -45,7 +47,7 @@ public class BakingService extends IntentService {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int [] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this,IngredientsWidget.class));
 
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds,R.id.list_widget);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_widget);
         IngredientsWidget.updateAppWidget(this,appWidgetManager,appWidgetIds,ingredients);
     }
 

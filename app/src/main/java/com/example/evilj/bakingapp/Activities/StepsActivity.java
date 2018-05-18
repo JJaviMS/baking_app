@@ -1,4 +1,4 @@
-package com.example.evilj.bakingapp;
+package com.example.evilj.bakingapp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
+import com.example.evilj.bakingapp.R;
+import com.example.evilj.bakingapp.fragment.StepFragment;
 import com.example.evilj.bakingapp.models.Steps;
 
 import butterknife.BindView;

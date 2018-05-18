@@ -1,9 +1,11 @@
-package com.example.evilj.bakingapp;
+package com.example.evilj.bakingapp.widget;
 
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
+import com.example.evilj.bakingapp.R;
 
 import java.util.ArrayList;
 
@@ -54,7 +56,7 @@ class ListRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory{
     public RemoteViews getViewAt(int i) {
         if (mStrings ==null || mStrings.size()==0) return null;
         String string = mStrings.get(i);
-        RemoteViews view = new RemoteViews(mContext.getPackageName(),R.layout.ingredient_widget_container);
+        RemoteViews view = new RemoteViews(mContext.getPackageName(), R.layout.ingredient_widget_container);
         view.setTextViewText(R.id.widget_text_view,string);
         return view;
     }

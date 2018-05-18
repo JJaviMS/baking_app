@@ -1,10 +1,12 @@
-package com.example.evilj.bakingapp;
+package com.example.evilj.bakingapp.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.example.evilj.bakingapp.R;
 
 import java.util.ArrayList;
 
@@ -54,7 +56,7 @@ public class IngredientsWidget extends AppWidgetProvider {
     }
 
     private static RemoteViews getRemoteViews (Context context){
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(),R.layout.ingredients_widget);
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
         Intent intent = new Intent(context,ListWidgetService.class);
         intent.putExtra(BakingService.INGREDIENTS_EXTRA,ingredientes);
         remoteViews.setRemoteAdapter(R.id.list_widget,intent);
