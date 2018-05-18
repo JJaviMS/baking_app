@@ -7,7 +7,7 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.evilj.bakingapp.Activities.MainActivity;
+import com.example.evilj.bakingapp.activities.MainActivity;
 
 import org.junit.After;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package com.example.evilj.bakingapp.Activities;
+package com.example.evilj.bakingapp.activities;
 
 
 import android.content.Intent;
@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -82,6 +85,9 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null) actionBar.setDisplayHomeAsUpEnabled(true);
+
     }
 
 
@@ -151,6 +157,17 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
         mStepFragment = new StepFragment();
         mStepFragment.setSteps(mSteps[currentPos]);
         mFragmentManager.beginTransaction().replace(R.id.master_flow_frame_layout, mStepFragment).commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

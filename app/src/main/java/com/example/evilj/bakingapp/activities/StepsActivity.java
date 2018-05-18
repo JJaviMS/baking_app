@@ -1,10 +1,13 @@
-package com.example.evilj.bakingapp.Activities;
+package com.example.evilj.bakingapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Button;
 
 import com.example.evilj.bakingapp.R;
@@ -43,6 +46,9 @@ public class StepsActivity extends AppCompatActivity implements StepFragment.Ste
         mStepFragment.setSteps(mSteps[currentPos]);
 
         mFragmentManager.beginTransaction().replace(R.id.frame_layout_step,mStepFragment).commit();
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null) actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @OnClick(R.id.next_button)
@@ -79,5 +85,16 @@ public class StepsActivity extends AppCompatActivity implements StepFragment.Ste
                 }
             },3000);//Wait 3 seconds before going into the next Step
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,9 +1,12 @@
-package com.example.evilj.bakingapp.Activities;
+package com.example.evilj.bakingapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.example.evilj.bakingapp.R;
 import com.example.evilj.bakingapp.fragment.IngredientsFragment;
@@ -34,6 +37,9 @@ public class IngredientsActivity extends AppCompatActivity {
         mFragmentManager.beginTransaction().replace(R.id.ingredient_fragment,mIngredientsFragment).commit();
 
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null) actionBar.setDisplayHomeAsUpEnabled(true);
+
     }
 
     private void sendNewIngredientsToWidget (Ingredients[] ingredients){
@@ -42,6 +48,18 @@ public class IngredientsActivity extends AppCompatActivity {
             strings.add(ingredient.getIngredient());
         }
         BakingService.startBakingService(this,strings);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

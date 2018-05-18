@@ -1,4 +1,4 @@
-package com.example.evilj.bakingapp.Activities;
+package com.example.evilj.bakingapp.activities;
 
 import android.content.Context;
 import android.content.Intent;
