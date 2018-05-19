@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -45,12 +46,13 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class StepFragment extends Fragment implements Player.EventListener {
-    private static final String TAG = StepFragment.class.getSimpleName();
+    public static final String TAG = StepFragment.class.getSimpleName();
+
 
     @BindView(R.id.simpleExoPlayerView)
     SimpleExoPlayerView mExoPlayerView;
-    @BindView(R.id.aspect_ratio_frame)
-    AspectRatioFrameLayout mAspectRatioFrameLayout;
+    /*@BindView(R.id.aspect_ratio_frame)
+    AspectRatioFrameLayout mAspectRatioFrameLayout;*/
     @BindView(R.id.text_fragment)
     TextView mRecipeTextView;
     private Steps mSteps;
@@ -61,7 +63,8 @@ public class StepFragment extends Fragment implements Player.EventListener {
     private StepListener mStepListener;
 
     private final String SAVE_STEP = "state";
-
+    private final String SAVE_PLAYER_STATE = "player_state";
+    public final String SAVE_PLAYER_POS = "player_pos";
 
 
     public StepFragment() {
@@ -73,22 +76,23 @@ public class StepFragment extends Fragment implements Player.EventListener {
     }
 
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_step, container, false);
+        View view = inflater.inflate(R.layout.fragment_step, container, false);
         mContext = getContext();
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
         initializeMediaSession();
-        if (savedInstanceState!=null)mSteps = savedInstanceState.getParcelable(SAVE_STEP);
-        if (mSteps==null)throw new RuntimeException("Steps can´t be null");
-        mAspectRatioFrameLayout.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
+        if (savedInstanceState != null) mSteps = savedInstanceState.getParcelable(SAVE_STEP);
+
+        if (mSteps == null) throw new RuntimeException("Steps can´t be null");
+        //mAspectRatioFrameLayout.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
         mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
-        initializePlayer(Uri.parse(mSteps.getVideoUrl()));
+
         mRecipeTextView.setText(mSteps.getDesc());
+
 
         return view;
     }
@@ -97,8 +101,8 @@ public class StepFragment extends Fragment implements Player.EventListener {
         mSteps = steps;
     }
 
-    private void initializeMediaSession(){
-        sSessionCompat = new MediaSessionCompat(mContext,TAG);
+    private void initializeMediaSession() {
+        sSessionCompat = new MediaSessionCompat(mContext, TAG);
 
         sSessionCompat.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         mPlaybackBuilder = new PlaybackStateCompat.Builder().setActions(PlaybackStateCompat.ACTION_PLAY |
@@ -111,20 +115,21 @@ public class StepFragment extends Fragment implements Player.EventListener {
         sSessionCompat.setActive(true);
     }
 
-    private void initializePlayer (Uri uri){
-        if (mExoPlayer==null){
+    private void initializePlayer(Uri uri, boolean state,long pos) {
+        if (mExoPlayer == null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
-            mExoPlayer= ExoPlayerFactory.newSimpleInstance(getContext(),trackSelector,loadControl);
+            mExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
             mExoPlayerView.setPlayer(mExoPlayer);
 
             mExoPlayer.addListener(this);
 
-            String userAgent = Util.getUserAgent(getContext(),getString(R.string.app_name));
+            String userAgent = Util.getUserAgent(getContext(), getString(R.string.app_name));
             DataSource.Factory dataSource = new DefaultHttpDataSourceFactory(userAgent);
             MediaSource mediaSource = new ExtractorMediaSource.Factory(dataSource).createMediaSource(uri);
             mExoPlayer.prepare(mediaSource);
-            mExoPlayer.setPlayWhenReady(true);
+            mExoPlayer.seekTo(pos);
+            mExoPlayer.setPlayWhenReady(state);
         }
     }
 
@@ -145,13 +150,13 @@ public class StepFragment extends Fragment implements Player.EventListener {
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        if ((playbackState== ExoPlayer.STATE_READY)&& playWhenReady){
+        if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
             mPlaybackBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
-                    mExoPlayer.getCurrentPosition(),1f);
-        }else if ((playbackState==ExoPlayer.STATE_READY)){
-            mPlaybackBuilder.setState(PlaybackStateCompat.STATE_PAUSED,mExoPlayer.getCurrentPosition(),
+                    mExoPlayer.getCurrentPosition(), 1f);
+        } else if ((playbackState == ExoPlayer.STATE_READY)) {
+            mPlaybackBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(),
                     1f);
-        }else if ((playbackState==ExoPlayer.STATE_ENDED)){
+        } else if ((playbackState == ExoPlayer.STATE_ENDED)) {
             mStepListener.videoCompleted();
         }
         sSessionCompat.setPlaybackState(mPlaybackBuilder.build());
@@ -170,7 +175,7 @@ public class StepFragment extends Fragment implements Player.EventListener {
 
     @Override
     public void onPlayerError(ExoPlaybackException error) {
-        if (error.type==ExoPlaybackException.TYPE_SOURCE){
+        if (error.type == ExoPlaybackException.TYPE_SOURCE) {
             Toast.makeText(mContext, "Error loading video", Toast.LENGTH_LONG).show();
         }
 
@@ -192,7 +197,7 @@ public class StepFragment extends Fragment implements Player.EventListener {
     }
 
 
-    private class MySessionCallbacks extends MediaSessionCompat.Callback{
+    private class MySessionCallbacks extends MediaSessionCompat.Callback {
         @Override
         public void onPlay() {
             mExoPlayer.setPlayWhenReady(true);
@@ -210,18 +215,12 @@ public class StepFragment extends Fragment implements Player.EventListener {
     }
 
 
-    private void releasePlayer(){
+    private void releasePlayer() {
         mExoPlayer.stop();
         mExoPlayer.release();
-        mExoPlayer=null;
+        mExoPlayer = null;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        releasePlayer();
-        sSessionCompat.setActive(false);
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -229,7 +228,7 @@ public class StepFragment extends Fragment implements Player.EventListener {
 
         try {
             mStepListener = (StepListener) context;
-        }catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + "must implement StepListener");
         }
     }
@@ -237,6 +236,38 @@ public class StepFragment extends Fragment implements Player.EventListener {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(SAVE_STEP,mSteps);
+        outState.putParcelable(SAVE_STEP, mSteps);
+        outState.putBoolean(SAVE_PLAYER_STATE, mExoPlayer.getPlayWhenReady());
+        outState.putLong(SAVE_PLAYER_POS, mExoPlayer.getCurrentPosition());
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        releasePlayer();
+        sSessionCompat.setActive(false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        boolean playerState;
+        long position;
+        if (savedInstanceState != null) {
+            playerState = savedInstanceState.getBoolean(SAVE_PLAYER_STATE);
+            position = savedInstanceState.getLong(SAVE_PLAYER_POS);
+
+        } else{
+            playerState = true;
+            position = 0;
+        }
+        initializePlayer(Uri.parse(mSteps.getVideoUrl()), playerState,position);
     }
 }

@@ -2,14 +2,8 @@ package com.example.evilj.bakingapp.utils;
 
 import android.support.annotation.Nullable;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -20,7 +14,7 @@ import javax.net.ssl.HttpsURLConnection;
  * @author JJaviMS
  */
 
-public class NetworkUtils {
+public final class NetworkUtils {
 
     private static final String JSONURL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 

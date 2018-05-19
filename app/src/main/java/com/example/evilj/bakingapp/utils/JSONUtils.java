@@ -15,7 +15,7 @@ import org.json.JSONObject;
  * @author JJaviMS
  */
 
-public class JSONUtils {
+public final class JSONUtils {
 
     public static String NAME = "name";
     public static String INGREDIENTS = "ingredients";

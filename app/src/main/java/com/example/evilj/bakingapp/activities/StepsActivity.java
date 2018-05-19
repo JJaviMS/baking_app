@@ -30,6 +30,8 @@ public class StepsActivity extends AppCompatActivity implements StepFragment.Ste
     private Steps[] mSteps;
     StepFragment mStepFragment;
 
+    private final String SAVE_POSITION = "position";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,53 +39,61 @@ public class StepsActivity extends AppCompatActivity implements StepFragment.Ste
         ButterKnife.bind(this);
         mFragmentManager = getSupportFragmentManager();
         Intent intentWhichStartedActivity = getIntent();
-        if (intentWhichStartedActivity== null)throw new RuntimeException();
+        if (intentWhichStartedActivity == null) throw new RuntimeException();
         mSteps = Steps.parseParcelable(intentWhichStartedActivity.getParcelableArrayExtra(BakeryMain.STEP_EXTRA_KEY));
-        currentPos = intentWhichStartedActivity.getIntExtra(BakeryMain.STEP_POSTION_EXTRA_KEY,0);
-        if (currentPos==mSteps.length-1) mNextButton.setEnabled(false);
-        if (currentPos==0) mPrevButton.setEnabled(false);
-        mStepFragment = new StepFragment();
-        mStepFragment.setSteps(mSteps[currentPos]);
+        if (savedInstanceState != null) {
+            currentPos = savedInstanceState.getInt(SAVE_POSITION);
+        }
+        currentPos = intentWhichStartedActivity.getIntExtra(BakeryMain.STEP_POSTION_EXTRA_KEY, 0);
+        if (currentPos == mSteps.length - 1) mNextButton.setEnabled(false);
+        if (currentPos == 0) mPrevButton.setEnabled(false);
+        mStepFragment = (StepFragment) mFragmentManager.findFragmentByTag(StepFragment.TAG);
+        if (mStepFragment == null) {
+            mStepFragment = new StepFragment();
+            mStepFragment.setSteps(mSteps[currentPos]);
+            mFragmentManager.beginTransaction().replace(R.id.frame_layout_step, mStepFragment, StepFragment.TAG).commit();
+        }
 
-        mFragmentManager.beginTransaction().replace(R.id.frame_layout_step,mStepFragment).commit();
+
+
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar!=null) actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @OnClick(R.id.next_button)
-    void nextStepFragment (){
+    void nextStepFragment() {
         currentPos++;
-        if (currentPos==mSteps.length-1) mNextButton.setEnabled(false);
+        if (currentPos == mSteps.length - 1) mNextButton.setEnabled(false);
         if (!mPrevButton.isEnabled()) mPrevButton.setEnabled(true);
         changeFragment();
     }
 
     @OnClick(R.id.previous_button)
-    void previousStepFragment(){
+    void previousStepFragment() {
         currentPos--;
-        if (currentPos==0) mPrevButton.setEnabled(false);
+        if (currentPos == 0) mPrevButton.setEnabled(false);
         if (!mNextButton.isEnabled()) mNextButton.setEnabled(true);
         changeFragment();
     }
 
-    private void changeFragment(){
+    private void changeFragment() {
         mStepFragment = new StepFragment();
         mStepFragment.setSteps(mSteps[currentPos]);
-        mFragmentManager.beginTransaction().replace(R.id.frame_layout_step,mStepFragment).commit();
+        mFragmentManager.beginTransaction().replace(R.id.frame_layout_step, mStepFragment).commit();
 
     }
 
     @Override
     public void videoCompleted() {
-        if (currentPos!=mSteps.length-1){
+        if (currentPos != mSteps.length - 1) {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     nextStepFragment();
                 }
-            },3000);//Wait 3 seconds before going into the next Step
+            }, 3000);//Wait 3 seconds before going into the next Step
         }
     }
 
@@ -96,5 +106,11 @@ public class StepsActivity extends AppCompatActivity implements StepFragment.Ste
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SAVE_POSITION, currentPos);
     }
 }
