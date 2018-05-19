@@ -2,7 +2,6 @@ package com.example.evilj.bakingapp.activities;
 
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -55,6 +54,8 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
     private StepFragment mStepFragment;
     private int currentPos;
 
+    private final String SAVE_CURRENT_POS = "pos";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,18 +79,22 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, mLinearLayoutManager.getOrientation()));
         if (mTwoPane) {
             mFragmentManager = getSupportFragmentManager();
-            mStepFragment = new StepFragment();
+            mStepFragment = (StepFragment) mFragmentManager.findFragmentByTag(StepFragment.TAG);
+            if (savedInstanceState!=null){
+                currentPos = savedInstanceState.getInt(SAVE_CURRENT_POS);
+            }else{
+                currentPos = 0;
+            }
+            if (mStepFragment == null)
+                mStepFragment = new StepFragment();
             mStepFragment.setSteps(mSteps[0]);
-            currentPos = 0;
-            mFragmentManager.beginTransaction().add(R.id.master_flow_frame_layout, mStepFragment).commit();
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            mFragmentManager.beginTransaction().add(R.id.master_flow_frame_layout, mStepFragment, StepFragment.TAG).commit();
         }
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar!=null) actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
-
 
 
     @OnClick(R.id.ingredients_layout)
@@ -98,12 +103,12 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
             Intent intent = new Intent(this, IngredientsActivity.class);
             intent.putExtra(KEY_INGREDIENTS, mIngredients);
             startActivity(intent);
-        }else{
+        } else {
             IngredientsFragment ingredientsFragment = new IngredientsFragment();
             ingredientsFragment.setIngredients(mIngredients);
-            mFragmentManager.beginTransaction().replace(R.id.master_flow_frame_layout,ingredientsFragment).commit();
+            mFragmentManager.beginTransaction().replace(R.id.master_flow_frame_layout, ingredientsFragment,IngredientsFragment.TAG).commit();
             mStepFragment = null;
-            currentPos=-1;
+            currentPos = -1;
         }
     }
 
@@ -123,6 +128,8 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(RESTORE_RECYCLER_VIEW, mLinearLayoutManager.onSaveInstanceState());
+        if (mTwoPane)
+            outState.putInt(SAVE_CURRENT_POS,currentPos);
     }
 
     @Override
@@ -169,5 +176,12 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
 
 }

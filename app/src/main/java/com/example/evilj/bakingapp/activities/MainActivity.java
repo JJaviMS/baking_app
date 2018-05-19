@@ -126,4 +126,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mSimpleIdlingResource= new SimpleIdlingResource();
         return mSimpleIdlingResource;
     }
+
+
 }

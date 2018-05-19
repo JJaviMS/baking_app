@@ -43,8 +43,9 @@ public class StepsActivity extends AppCompatActivity implements StepFragment.Ste
         mSteps = Steps.parseParcelable(intentWhichStartedActivity.getParcelableArrayExtra(BakeryMain.STEP_EXTRA_KEY));
         if (savedInstanceState != null) {
             currentPos = savedInstanceState.getInt(SAVE_POSITION);
+        } else {
+            currentPos = intentWhichStartedActivity.getIntExtra(BakeryMain.STEP_POSTION_EXTRA_KEY, 0);
         }
-        currentPos = intentWhichStartedActivity.getIntExtra(BakeryMain.STEP_POSTION_EXTRA_KEY, 0);
         if (currentPos == mSteps.length - 1) mNextButton.setEnabled(false);
         if (currentPos == 0) mPrevButton.setEnabled(false);
         mStepFragment = (StepFragment) mFragmentManager.findFragmentByTag(StepFragment.TAG);
@@ -53,8 +54,6 @@ public class StepsActivity extends AppCompatActivity implements StepFragment.Ste
             mStepFragment.setSteps(mSteps[currentPos]);
             mFragmentManager.beginTransaction().replace(R.id.frame_layout_step, mStepFragment, StepFragment.TAG).commit();
         }
-
-
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -80,7 +79,7 @@ public class StepsActivity extends AppCompatActivity implements StepFragment.Ste
     private void changeFragment() {
         mStepFragment = new StepFragment();
         mStepFragment.setSteps(mSteps[currentPos]);
-        mFragmentManager.beginTransaction().replace(R.id.frame_layout_step, mStepFragment).commit();
+        mFragmentManager.beginTransaction().replace(R.id.frame_layout_step, mStepFragment, StepFragment.TAG).commit();
 
     }
 

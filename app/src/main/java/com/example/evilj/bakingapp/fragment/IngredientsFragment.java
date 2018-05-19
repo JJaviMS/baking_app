@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class IngredientsFragment extends Fragment {
+    public static String TAG = IngredientsFragment.class.getSimpleName();
 
     @BindView(R.id.ingredients_fragment_recycler)
     RecyclerView mRecyclerView;

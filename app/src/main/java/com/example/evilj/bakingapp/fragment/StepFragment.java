@@ -92,8 +92,6 @@ public class StepFragment extends Fragment implements Player.EventListener {
         mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
 
         mRecipeTextView.setText(mSteps.getDesc());
-
-
         return view;
     }
 
@@ -115,7 +113,7 @@ public class StepFragment extends Fragment implements Player.EventListener {
         sSessionCompat.setActive(true);
     }
 
-    private void initializePlayer(Uri uri, boolean state,long pos) {
+    private void initializePlayer(Uri uri, boolean state, long pos) {
         if (mExoPlayer == null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
@@ -253,21 +251,32 @@ public class StepFragment extends Fragment implements Player.EventListener {
     public void onStart() {
         super.onStart();
 
+
     }
 
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         boolean playerState;
         long position;
         if (savedInstanceState != null) {
             playerState = savedInstanceState.getBoolean(SAVE_PLAYER_STATE);
             position = savedInstanceState.getLong(SAVE_PLAYER_POS);
 
-        } else{
+        } else {
             playerState = true;
             position = 0;
         }
-        initializePlayer(Uri.parse(mSteps.getVideoUrl()), playerState,position);
+        initializeMediaSession();
+        initializePlayer(Uri.parse(mSteps.getVideoUrl()), playerState, position);
+
     }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+    }
+
+
 }
