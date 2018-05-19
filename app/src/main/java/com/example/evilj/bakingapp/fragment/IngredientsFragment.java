@@ -32,7 +32,7 @@ public class IngredientsFragment extends Fragment {
 
     private LinearLayoutManager mLinearLayoutManager;
     private IngredientsAdapter mIngredientsAdapter;
-    private Ingredients [] mIngredients;
+    private Ingredients[] mIngredients;
 
     public IngredientsFragment() {
         // Required empty public constructor
@@ -44,9 +44,9 @@ public class IngredientsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ingredients, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
-        mIngredientsAdapter= new IngredientsAdapter(getContext());
+        mIngredientsAdapter = new IngredientsAdapter(getContext());
         mIngredientsAdapter.setIngredients(mIngredients);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(mIngredientsAdapter);
@@ -60,13 +60,13 @@ public class IngredientsFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(RECYCLER_VIEW_STATE,mLinearLayoutManager.onSaveInstanceState());
+        outState.putParcelable(RECYCLER_VIEW_STATE, mLinearLayoutManager.onSaveInstanceState());
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState!=null){
+        if (savedInstanceState != null) {
             mLinearLayoutManager.onRestoreInstanceState(savedInstanceState.getParcelable(RECYCLER_VIEW_STATE));
         }
     }

@@ -34,26 +34,26 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @NonNull
     @Override
     public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.ingredient_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.ingredient_item, parent, false);
         view.setFocusable(false);
         return new IngredientViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
-        Ingredients ingredients = mIngredients [position];
+        Ingredients ingredients = mIngredients[position];
         holder.mIngredientNameTv.setText(ingredients.getIngredient());
         holder.mMeasureTv.setText(ingredients.getMeasure());
-        holder.mQuantityTv.setText(String.format(String.valueOf(Locale.getDefault()),ingredients.getQuantity()));
+        holder.mQuantityTv.setText(String.format(String.valueOf(Locale.getDefault()), ingredients.getQuantity()));
     }
 
     @Override
     public int getItemCount() {
-        if (mIngredients==null) return 0;
+        if (mIngredients == null) return 0;
         else return mIngredients.length;
     }
 
-    public void setIngredients (Ingredients[] ingredients){
+    public void setIngredients(Ingredients[] ingredients) {
         mIngredients = ingredients;
         notifyDataSetChanged();
     }
@@ -65,9 +65,10 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         TextView mMeasureTv;
         @BindView(R.id.quantity_desc_text_view)
         TextView mQuantityTv;
+
         IngredientViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

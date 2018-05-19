@@ -18,13 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.BakeryMain"
+        <activity
+            android:name=".activities.BakeryMain"
             android:parentActivityName=".activities.MainActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".activities.IngredientsActivity"
-            android:parentActivityName=".activities.BakeryMain"/>
-        <activity android:name=".activities.StepsActivity"
-            android:parentActivityName=".activities.BakeryMain"/>
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.IngredientsActivity"
+            android:parentActivityName=".activities.BakeryMain" />
+        <activity
+            android:name=".activities.StepsActivity"
+            android:parentActivityName=".activities.BakeryMain" />
 
         <receiver android:name=".widget.IngredientsWidget">
             <intent-filter>

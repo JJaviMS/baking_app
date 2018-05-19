@@ -32,7 +32,7 @@ public class MainActivityTest {
     private IdlingResource mIdlingResource;
 
     @Before
-    public void registerIDlingResource (){
+    public void registerIDlingResource() {
         mIdlingResource = mTestRule.getActivity().getSimpleIdlingResource();
 
         IdlingRegistry.getInstance().register(mIdlingResource);
@@ -40,13 +40,13 @@ public class MainActivityTest {
 
 
     @Test
-    public void recycler_view_test (){
-        onView(ViewMatchers.withId(R.id.recycler_view_bakery)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
+    public void recycler_view_test() {
+        onView(ViewMatchers.withId(R.id.recycler_view_bakery)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
     }
 
     @After
-    public void unregisterIdlingResource (){
-        if (mIdlingResource!=null)
-        IdlingRegistry.getInstance().unregister(mIdlingResource);
+    public void unregisterIdlingResource() {
+        if (mIdlingResource != null)
+            IdlingRegistry.getInstance().unregister(mIdlingResource);
     }
 }

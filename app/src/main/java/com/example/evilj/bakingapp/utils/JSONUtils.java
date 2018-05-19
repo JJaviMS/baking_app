@@ -30,6 +30,7 @@ public final class JSONUtils {
 
     /**
      * Parse the JSON data into an array of JSON objects which contains the bakery
+     *
      * @param jsonData The String to parse
      * @return A JSONArray which contains the bakery
      */
@@ -38,7 +39,7 @@ public final class JSONUtils {
         JSONArray jsonArray;
         try {
             jsonArray = new JSONArray(jsonData);
-        } catch (JSONException |NullPointerException e) {
+        } catch (JSONException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }
@@ -47,11 +48,12 @@ public final class JSONUtils {
 
     /**
      * Get the name of the element
+     *
      * @param object The raw JSON of a bakery
      * @return The name of the object
      */
     @Nullable
-    public static String getBakeryName(JSONObject object){
+    public static String getBakeryName(JSONObject object) {
         try {
             return object.getString(NAME);
         } catch (JSONException e) {
@@ -63,19 +65,20 @@ public final class JSONUtils {
     /**
      * Given a JSON object with a bakery information it parses the ingredients into an Array which
      * contains the different ingredients wrapped into a {@see com.example.evilj.bakingapp.models.Ingredients}
+     *
      * @param object The JSON object of the bakery to get the objects
      * @return An Array of the ingredients parsed into Ingredients objects
      */
     @Nullable
-    public static Ingredients[] parseIngredients (String object){
+    public static Ingredients[] parseIngredients(String object) {
         try {
             JSONObject json = new JSONObject(object);
             JSONArray ingredients = json.getJSONArray(INGREDIENTS);
             int size = ingredients.length();
             Ingredients[] parsed = new Ingredients[size];
-            for (int i=0;i<size;i++){
+            for (int i = 0; i < size; i++) {
                 JSONObject current = ingredients.getJSONObject(i);
-                parsed[i] = new Ingredients(current.getDouble(QUANTITY),current.getString(MEASURE),current.getString(INGREDIENT));
+                parsed[i] = new Ingredients(current.getDouble(QUANTITY), current.getString(MEASURE), current.getString(INGREDIENT));
             }
             return parsed;
         } catch (JSONException e) {
@@ -83,23 +86,25 @@ public final class JSONUtils {
             return null;
         }
     }
+
     /**
      * Given a JSON object with a bakery information it parses the ingredients into an Array which
      * contains the different ingredients wrapped into a {@see com.example.evilj.bakingapp.models.Steps}
+     *
      * @param object The JSON object of the bakery to get the objects
      * @return An Array of the steps parsed into Steps objects
      */
     @Nullable
-    public static Steps[] parseSteps (String object){
-        try{
+    public static Steps[] parseSteps(String object) {
+        try {
             JSONObject json = new JSONObject(object);
             JSONArray steps = json.getJSONArray(STEPS);
             int size = steps.length();
             Steps[] parsed = new Steps[size];
-            for (int i=0;i<size;i++){
+            for (int i = 0; i < size; i++) {
                 JSONObject current = steps.getJSONObject(i);
-                parsed[i] = new Steps(current.getString(SHORT_DESCRIPTION),current.getString(DESCRIPTION),
-                        current.getString(VIDEO_URL),current.getString(THUMBNAIL_URL));
+                parsed[i] = new Steps(current.getString(SHORT_DESCRIPTION), current.getString(DESCRIPTION),
+                        current.getString(VIDEO_URL));
             }
             return parsed;
         } catch (JSONException e) {

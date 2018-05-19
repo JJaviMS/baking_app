@@ -67,6 +67,7 @@ public class StepFragment extends Fragment implements Player.EventListener {
 
     private long mPlayerPos;
     private boolean mPlayerState;
+
     public StepFragment() {
         // Required empty public constructor
     }
@@ -89,7 +90,7 @@ public class StepFragment extends Fragment implements Player.EventListener {
             mSteps = savedInstanceState.getParcelable(SAVE_STEP);
             mPlayerState = savedInstanceState.getBoolean(SAVE_PLAYER_STATE);
             mPlayerPos = savedInstanceState.getLong(SAVE_PLAYER_POS);
-        }else{
+        } else {
             mPlayerState = true;
         }
 
@@ -268,8 +269,6 @@ public class StepFragment extends Fragment implements Player.EventListener {
         initializeMediaSession();
         initializePlayer(Uri.parse(mSteps.getVideoUrl()), mPlayerState, mPlayerPos);
     }
-
-
 
 
 }

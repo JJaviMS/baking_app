@@ -4,14 +4,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Created by JjaviMS on 13/03/2018.
  *
  * @author JJaviMS
- *         <p>
- *         Auxiliar class to help saving the steps
- *         </p>
+ * <p>
+ * Auxiliar class to help saving the steps
+ * </p>
  */
 
 public class Steps implements Parcelable {
@@ -19,20 +20,18 @@ public class Steps implements Parcelable {
     private String shorDesc;
     private String desc;
     private String videoUrl;
-    private String thumbnailUrl;
 
-    public Steps(String shorDesc, String desc, String videoUrl, String thumbnailUrl) {
+
+    public Steps(String shorDesc, String desc, String videoUrl) {
         this.shorDesc = shorDesc;
         this.desc = desc;
         this.videoUrl = videoUrl;
-        this.thumbnailUrl = thumbnailUrl;
     }
 
     public Steps(Parcel parcelable) {
         this.shorDesc = parcelable.readString();
         this.desc = parcelable.readString();
         this.videoUrl = parcelable.readString();
-        this.thumbnailUrl = parcelable.readString();
     }
 
     public String getShorDesc() {
@@ -50,24 +49,16 @@ public class Steps implements Parcelable {
     }
 
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Steps steps = (Steps) o;
-
-        if (shorDesc != null ? !shorDesc.equals(steps.shorDesc) : steps.shorDesc != null)
-            return false;
-        if (desc != null ? !desc.equals(steps.desc) : steps.desc != null) return false;
-        if (videoUrl != null ? !videoUrl.equals(steps.videoUrl) : steps.videoUrl != null)
-            return false;
-        return thumbnailUrl != null ? thumbnailUrl.equals(steps.thumbnailUrl) : steps.thumbnailUrl == null;
+        return Objects.equals(shorDesc, steps.shorDesc) &&
+                Objects.equals(desc, steps.desc) &&
+                Objects.equals(videoUrl, steps.videoUrl);
     }
+
 
     @Override
     public int describeContents() {
@@ -79,7 +70,6 @@ public class Steps implements Parcelable {
         parcel.writeString(shorDesc);
         parcel.writeString(desc);
         parcel.writeString(videoUrl);
-        parcel.writeString(thumbnailUrl);
     }
 
     public static final Parcelable.Creator<Steps> CREATOR =
@@ -95,7 +85,7 @@ public class Steps implements Parcelable {
                 }
             };
 
-    public static Steps[] parseParcelable (Parcelable[] parcelables){
-        return Arrays.copyOf(parcelables,parcelables.length,Steps[].class);
+    public static Steps[] parseParcelable(Parcelable[] parcelables) {
+        return Arrays.copyOf(parcelables, parcelables.length, Steps[].class);
     }
 }

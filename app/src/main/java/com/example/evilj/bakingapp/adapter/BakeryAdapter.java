@@ -29,7 +29,8 @@ public class BakeryAdapter extends RecyclerView.Adapter<BakeryAdapter.BakeryView
     private JSONArray bakery;
     private Context mContext;
     private BakeryCallbacks mBakeryCallbacks;
-    public interface BakeryCallbacks{
+
+    public interface BakeryCallbacks {
         void onClick(String unparsedJSON);
     }
 
@@ -41,7 +42,7 @@ public class BakeryAdapter extends RecyclerView.Adapter<BakeryAdapter.BakeryView
     @NonNull
     @Override
     public BakeryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.bakery_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.bakery_item, parent, false);
         view.setFocusable(true);
         return new BakeryViewHolder(view);
     }
@@ -58,11 +59,11 @@ public class BakeryAdapter extends RecyclerView.Adapter<BakeryAdapter.BakeryView
 
     @Override
     public int getItemCount() {
-        if (bakery==null)return 0;
+        if (bakery == null) return 0;
         else return bakery.length();
     }
 
-    public void setBakery (JSONArray jsonArray){
+    public void setBakery(JSONArray jsonArray) {
         bakery = jsonArray;
         notifyDataSetChanged();
     }
@@ -70,9 +71,10 @@ public class BakeryAdapter extends RecyclerView.Adapter<BakeryAdapter.BakeryView
     class BakeryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.bakery_title)
         TextView mTitle;
+
         BakeryViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
@@ -83,7 +85,7 @@ public class BakeryAdapter extends RecyclerView.Adapter<BakeryAdapter.BakeryView
                 mBakeryCallbacks.onClick(baker);
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(mContext,"Error",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT).show();
             }
 
         }

@@ -80,9 +80,9 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
         if (mTwoPane) {
             mFragmentManager = getSupportFragmentManager();
             mStepFragment = (StepFragment) mFragmentManager.findFragmentByTag(StepFragment.TAG);
-            if (savedInstanceState!=null){
+            if (savedInstanceState != null) {
                 currentPos = savedInstanceState.getInt(SAVE_CURRENT_POS);
-            }else{
+            } else {
                 currentPos = 0;
             }
             if (mStepFragment == null)
@@ -106,7 +106,7 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
         } else {
             IngredientsFragment ingredientsFragment = new IngredientsFragment();
             ingredientsFragment.setIngredients(mIngredients);
-            mFragmentManager.beginTransaction().replace(R.id.master_flow_frame_layout, ingredientsFragment,IngredientsFragment.TAG).commit();
+            mFragmentManager.beginTransaction().replace(R.id.master_flow_frame_layout, ingredientsFragment, IngredientsFragment.TAG).commit();
             mStepFragment = null;
             currentPos = -1;
         }
@@ -129,7 +129,7 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
         super.onSaveInstanceState(outState);
         outState.putParcelable(RESTORE_RECYCLER_VIEW, mLinearLayoutManager.onSaveInstanceState());
         if (mTwoPane)
-            outState.putInt(SAVE_CURRENT_POS,currentPos);
+            outState.putInt(SAVE_CURRENT_POS, currentPos);
     }
 
     @Override

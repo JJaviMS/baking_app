@@ -11,7 +11,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class SimpleIdlingResource implements android.support.test.espresso.IdlingResource {
 
-    @Nullable private volatile ResourceCallback mResourceCallback;
+    @Nullable
+    private volatile ResourceCallback mResourceCallback;
 
     private AtomicBoolean mIsIdle = new AtomicBoolean(true);
 
@@ -30,9 +31,9 @@ public class SimpleIdlingResource implements android.support.test.espresso.Idlin
         mResourceCallback = callback;
     }
 
-    public void setIsIdle (boolean bool){
+    public void setIsIdle(boolean bool) {
         mIsIdle.set(bool);
-        if (isIdleNow() && mResourceCallback!=null){
+        if (isIdleNow() && mResourceCallback != null) {
             mResourceCallback.onTransitionToIdle();
         }
     }

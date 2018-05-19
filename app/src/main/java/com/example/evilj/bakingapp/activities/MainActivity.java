@@ -121,9 +121,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @VisibleForTesting
     @NonNull
-    public SimpleIdlingResource getSimpleIdlingResource(){
-        if (mSimpleIdlingResource==null)
-            mSimpleIdlingResource= new SimpleIdlingResource();
+    public SimpleIdlingResource getSimpleIdlingResource() {
+        if (mSimpleIdlingResource == null)
+            mSimpleIdlingResource = new SimpleIdlingResource();
         return mSimpleIdlingResource;
     }
 

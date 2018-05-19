@@ -39,7 +39,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     @NonNull
     @Override
     public StepsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.bakery_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.bakery_item, parent, false);
         return new StepsViewHolder(view);
     }
 
@@ -50,16 +50,17 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
 
     @Override
     public int getItemCount() {
-        if (mSteps==null) return 0;
+        if (mSteps == null) return 0;
         else return mSteps.length;
     }
 
-    class StepsViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener {
+    class StepsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.bakery_title)
         TextView mTitleTV;
+
         StepsViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 

@@ -10,7 +10,7 @@ import java.util.Arrays;
  * Created by JjaviMS on 13/03/2018.
  *
  * @author JJaviMS
- *
+ * <p>
  * This is a class to help saving the ingredients
  */
 
@@ -76,13 +76,14 @@ public class Ingredients implements Parcelable {
                 }
             };
 
-    public Ingredients (Parcel parcel){
+    public Ingredients(Parcel parcel) {
         this.quantity = parcel.readDouble();
         this.measure = parcel.readString();
         this.ingredient = parcel.readString();
     }
+
     @NonNull
-    public static Ingredients[] parseParcelable (@NonNull Parcelable[] parcelables){
-        return Arrays.copyOf(parcelables,parcelables.length,Ingredients[].class);
+    public static Ingredients[] parseParcelable(@NonNull Parcelable[] parcelables) {
+        return Arrays.copyOf(parcelables, parcelables.length, Ingredients[].class);
     }
 }

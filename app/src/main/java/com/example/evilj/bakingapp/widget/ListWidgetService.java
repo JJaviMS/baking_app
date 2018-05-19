@@ -17,11 +17,11 @@ import java.util.ArrayList;
 public class ListWidgetService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new ListRemoteViewFactory(this.getApplicationContext(),intent.getStringArrayListExtra(BakingService.INGREDIENTS_EXTRA));
+        return new ListRemoteViewFactory(this.getApplicationContext(), intent.getStringArrayListExtra(BakingService.INGREDIENTS_EXTRA));
     }
 }
 
-class ListRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory{
+class ListRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
     ListRemoteViewFactory(Context context, ArrayList<String> strings) {
         mContext = context;
@@ -48,16 +48,16 @@ class ListRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory{
 
     @Override
     public int getCount() {
-        if (mStrings==null) return 0;
+        if (mStrings == null) return 0;
         else return mStrings.size();
     }
 
     @Override
     public RemoteViews getViewAt(int i) {
-        if (mStrings ==null || mStrings.size()==0) return null;
+        if (mStrings == null || mStrings.size() == 0) return null;
         String string = mStrings.get(i);
         RemoteViews view = new RemoteViews(mContext.getPackageName(), R.layout.ingredient_widget_container);
-        view.setTextViewText(R.id.widget_text_view,string);
+        view.setTextViewText(R.id.widget_text_view, string);
         return view;
     }
 

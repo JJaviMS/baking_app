@@ -19,5 +19,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Name of the bakery"
-        android:textAlignment="center"/>
+        android:textAlignment="center" />
 </android.support.constraint.ConstraintLayout>

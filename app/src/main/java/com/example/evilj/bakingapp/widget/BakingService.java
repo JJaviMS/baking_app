@@ -25,30 +25,30 @@ public class BakingService extends IntentService {
         super("BakingService");
     }
 
-    public static void startBakingService (Context context, ArrayList<String> ingredients){
-        Intent intent = new Intent(context,BakingService.class);
+    public static void startBakingService(Context context, ArrayList<String> ingredients) {
+        Intent intent = new Intent(context, BakingService.class);
         intent.setAction(UPDATE_INGREDIENTS);
-        intent.putExtra(INGREDIENTS_EXTRA,ingredients);
+        intent.putExtra(INGREDIENTS_EXTRA, ingredients);
         context.startService(intent);
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if (intent==null) return;
+        if (intent == null) return;
         final String action = intent.getAction();
-        if (action==null) return;
-        if (action.equals(UPDATE_INGREDIENTS)){
+        if (action == null) return;
+        if (action.equals(UPDATE_INGREDIENTS)) {
             ArrayList<String> strings = intent.getStringArrayListExtra(INGREDIENTS_EXTRA);
             handleUpdate(strings);
         }
     }
 
-    private void handleUpdate (ArrayList<String> ingredients){
+    private void handleUpdate(ArrayList<String> ingredients) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        int [] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this,IngredientsWidget.class));
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, IngredientsWidget.class));
 
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_widget);
-        IngredientsWidget.updateAppWidget(this,appWidgetManager,appWidgetIds,ingredients);
+        IngredientsWidget.updateAppWidget(this, appWidgetManager, appWidgetIds, ingredients);
     }
 
 

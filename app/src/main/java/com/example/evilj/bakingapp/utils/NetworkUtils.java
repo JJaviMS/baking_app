@@ -20,11 +20,12 @@ public final class NetworkUtils {
 
     /**
      * Get the information from the server
+     *
      * @return The information of the bakery in JSON format
      * @throws IOException Related with the information retrieving
      */
     @Nullable
-    public static String bakeryServerResponse () throws IOException {
+    public static String bakeryServerResponse() throws IOException {
         URL url = new URL(JSONURL);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         try {
@@ -36,7 +37,7 @@ public final class NetworkUtils {
                 return scanner.next();
             } else
                 return null;
-        }finally {
+        } finally {
             connection.disconnect();
         }
 

@@ -34,20 +34,20 @@ public class IngredientsActivity extends AppCompatActivity {
         sendNewIngredientsToWidget(ingredients);
         mIngredientsFragment.setIngredients(ingredients);
         mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.beginTransaction().replace(R.id.ingredient_fragment,mIngredientsFragment).commit();
+        mFragmentManager.beginTransaction().replace(R.id.ingredient_fragment, mIngredientsFragment).commit();
 
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar!=null) actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
 
-    private void sendNewIngredientsToWidget (Ingredients[] ingredients){
+    private void sendNewIngredientsToWidget(Ingredients[] ingredients) {
         ArrayList<String> strings = new ArrayList<>();
-        for(Ingredients ingredient:ingredients){
+        for (Ingredients ingredient : ingredients) {
             strings.add(ingredient.getIngredient());
         }
-        BakingService.startBakingService(this,strings);
+        BakingService.startBakingService(this, strings);
     }
 
 

@@ -55,12 +55,12 @@ public class IngredientsWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private static RemoteViews getRemoteViews (Context context){
+    private static RemoteViews getRemoteViews(Context context) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
-        Intent intent = new Intent(context,ListWidgetService.class);
-        intent.putExtra(BakingService.INGREDIENTS_EXTRA,ingredientes);
-        remoteViews.setRemoteAdapter(R.id.list_widget,intent);
-        remoteViews.setEmptyView(R.id.list_widget,R.id.empty_widget);
+        Intent intent = new Intent(context, ListWidgetService.class);
+        intent.putExtra(BakingService.INGREDIENTS_EXTRA, ingredientes);
+        remoteViews.setRemoteAdapter(R.id.list_widget, intent);
+        remoteViews.setEmptyView(R.id.list_widget, R.id.empty_widget);
         return remoteViews;
     }
 
