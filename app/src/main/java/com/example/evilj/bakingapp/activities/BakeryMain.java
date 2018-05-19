@@ -87,8 +87,8 @@ public class BakeryMain extends AppCompatActivity implements StepsAdapter.StepsC
             }
             if (mStepFragment == null)
                 mStepFragment = new StepFragment();
-            mStepFragment.setSteps(mSteps[0]);
-            mFragmentManager.beginTransaction().add(R.id.master_flow_frame_layout, mStepFragment, StepFragment.TAG).commit();
+            mStepFragment.setSteps(mSteps[currentPos]);
+            mFragmentManager.beginTransaction().replace(R.id.master_flow_frame_layout, mStepFragment, StepFragment.TAG).commit();
         }
 
         ActionBar actionBar = getSupportActionBar();

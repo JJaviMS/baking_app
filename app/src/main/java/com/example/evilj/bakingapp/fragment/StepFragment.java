@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -66,7 +65,8 @@ public class StepFragment extends Fragment implements Player.EventListener {
     private final String SAVE_PLAYER_STATE = "player_state";
     public final String SAVE_PLAYER_POS = "player_pos";
 
-
+    private long mPlayerPos;
+    private boolean mPlayerState;
     public StepFragment() {
         // Required empty public constructor
     }
@@ -85,7 +85,13 @@ public class StepFragment extends Fragment implements Player.EventListener {
         ButterKnife.bind(this, view);
 
         initializeMediaSession();
-        if (savedInstanceState != null) mSteps = savedInstanceState.getParcelable(SAVE_STEP);
+        if (savedInstanceState != null) {
+            mSteps = savedInstanceState.getParcelable(SAVE_STEP);
+            mPlayerState = savedInstanceState.getBoolean(SAVE_PLAYER_STATE);
+            mPlayerPos = savedInstanceState.getLong(SAVE_PLAYER_POS);
+        }else{
+            mPlayerState = true;
+        }
 
         if (mSteps == null) throw new RuntimeException("Steps can´t be null");
         //mAspectRatioFrameLayout.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
@@ -215,6 +221,8 @@ public class StepFragment extends Fragment implements Player.EventListener {
 
     private void releasePlayer() {
         mExoPlayer.stop();
+        mPlayerPos = mExoPlayer.getCurrentPosition();
+        mPlayerState = mExoPlayer.getPlayWhenReady();
         mExoPlayer.release();
         mExoPlayer = null;
     }
@@ -255,28 +263,13 @@ public class StepFragment extends Fragment implements Player.EventListener {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        boolean playerState;
-        long position;
-        if (savedInstanceState != null) {
-            playerState = savedInstanceState.getBoolean(SAVE_PLAYER_STATE);
-            position = savedInstanceState.getLong(SAVE_PLAYER_POS);
-
-        } else {
-            playerState = true;
-            position = 0;
-        }
+    public void onResume() {
+        super.onResume();
         initializeMediaSession();
-        initializePlayer(Uri.parse(mSteps.getVideoUrl()), playerState, position);
-
+        initializePlayer(Uri.parse(mSteps.getVideoUrl()), mPlayerState, mPlayerPos);
     }
 
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
 
-    }
 
 
 }
