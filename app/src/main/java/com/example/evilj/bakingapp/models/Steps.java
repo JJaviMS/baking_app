@@ -20,18 +20,21 @@ public class Steps implements Parcelable {
     private String shorDesc;
     private String desc;
     private String videoUrl;
+    private String imageUrl;
 
 
-    public Steps(String shorDesc, String desc, String videoUrl) {
+    public Steps(String shorDesc, String desc, String videoUrl, String imageUrl) {
         this.shorDesc = shorDesc;
         this.desc = desc;
         this.videoUrl = videoUrl;
+        this.imageUrl = imageUrl;
     }
 
     public Steps(Parcel parcelable) {
         this.shorDesc = parcelable.readString();
         this.desc = parcelable.readString();
         this.videoUrl = parcelable.readString();
+        this.imageUrl = parcelable.readString();
     }
 
     public String getShorDesc() {
@@ -47,6 +50,8 @@ public class Steps implements Parcelable {
     public String getVideoUrl() {
         return videoUrl;
     }
+
+    public String getImageUrl(){return imageUrl;}
 
 
     @Override
@@ -70,6 +75,7 @@ public class Steps implements Parcelable {
         parcel.writeString(shorDesc);
         parcel.writeString(desc);
         parcel.writeString(videoUrl);
+        parcel.writeString(imageUrl);
     }
 
     public static final Parcelable.Creator<Steps> CREATOR =

@@ -104,7 +104,7 @@ public final class JSONUtils {
             for (int i = 0; i < size; i++) {
                 JSONObject current = steps.getJSONObject(i);
                 parsed[i] = new Steps(current.getString(SHORT_DESCRIPTION), current.getString(DESCRIPTION),
-                        current.getString(VIDEO_URL));
+                        current.getString(VIDEO_URL),current.getString(THUMBNAIL_URL));
             }
             return parsed;
         } catch (JSONException e) {

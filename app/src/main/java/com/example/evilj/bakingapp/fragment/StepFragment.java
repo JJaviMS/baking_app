@@ -11,9 +11,11 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.evilj.bakingapp.R;
 import com.example.evilj.bakingapp.models.Steps;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -54,6 +56,8 @@ public class StepFragment extends Fragment implements Player.EventListener {
     AspectRatioFrameLayout mAspectRatioFrameLayout;*/
     @BindView(R.id.text_fragment)
     TextView mRecipeTextView;
+    @BindView(R.id.thumbnail_view)
+    ImageView mThumbnailImageView;
     private Steps mSteps;
     private SimpleExoPlayer mExoPlayer;
     private static MediaSessionCompat sSessionCompat;
@@ -97,8 +101,14 @@ public class StepFragment extends Fragment implements Player.EventListener {
         if (mSteps == null) throw new RuntimeException("Steps can´t be null");
         //mAspectRatioFrameLayout.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
         mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
-
         mRecipeTextView.setText(mSteps.getDesc());
+        if (mSteps.getImageUrl()==null || mSteps.getImageUrl().isEmpty()){
+            hydeThumbnail();
+        }else{
+            showThumbnail();
+            Glide.with(this).load(mSteps.getImageUrl()).into(mThumbnailImageView);
+        }
+
         return view;
     }
 
@@ -158,6 +168,7 @@ public class StepFragment extends Fragment implements Player.EventListener {
         if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
             mPlaybackBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
                     mExoPlayer.getCurrentPosition(), 1f);
+            hydeThumbnail();
         } else if ((playbackState == ExoPlayer.STATE_READY)) {
             mPlaybackBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(),
                     1f);
@@ -268,6 +279,16 @@ public class StepFragment extends Fragment implements Player.EventListener {
         super.onResume();
         initializeMediaSession();
         initializePlayer(Uri.parse(mSteps.getVideoUrl()), mPlayerState, mPlayerPos);
+    }
+
+    private void showThumbnail() {
+        mExoPlayerView.setVisibility(View.GONE);
+        mThumbnailImageView.setVisibility(View.VISIBLE);
+    }
+
+    private void hydeThumbnail() {
+        mExoPlayerView.setVisibility(View.VISIBLE);
+        mThumbnailImageView.setVisibility(View.GONE);
     }
 
 
