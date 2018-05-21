@@ -102,11 +102,12 @@ public class StepFragment extends Fragment implements Player.EventListener {
         //mAspectRatioFrameLayout.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
         mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
         mRecipeTextView.setText(mSteps.getDesc());
-        if (mSteps.getImageUrl()==null || mSteps.getImageUrl().isEmpty()){
+        String url = mSteps.getImageUrl();
+        if (url==null || url.isEmpty()){
             hydeThumbnail();
         }else{
             showThumbnail();
-            Glide.with(this).load(mSteps.getImageUrl()).into(mThumbnailImageView);
+            Glide.with(this).load(url).into(mThumbnailImageView);
         }
 
         return view;
@@ -282,13 +283,13 @@ public class StepFragment extends Fragment implements Player.EventListener {
     }
 
     private void showThumbnail() {
-        mExoPlayerView.setVisibility(View.GONE);
+        mExoPlayerView.setVisibility(View.INVISIBLE);
         mThumbnailImageView.setVisibility(View.VISIBLE);
     }
 
     private void hydeThumbnail() {
         mExoPlayerView.setVisibility(View.VISIBLE);
-        mThumbnailImageView.setVisibility(View.GONE);
+        mThumbnailImageView.setVisibility(View.INVISIBLE);
     }
 
 
