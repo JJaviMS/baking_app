@@ -289,7 +289,7 @@ public class StepFragment extends Fragment implements Player.EventListener {
 
     private void hydeThumbnail() {
         mExoPlayerView.setVisibility(View.VISIBLE);
-        mThumbnailImageView.setVisibility(View.GONE);
+        mThumbnailImageView.setVisibility(View.INVISIBLE);
     }
 
 
